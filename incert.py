@@ -200,6 +200,17 @@ class Incert():
         else:
             return self + Incert(terme2)
 
+    def __eq__(self, terme2):
+        minself = self.valeur - 3*self.incert
+        maxself = self.valeur + 3*self.incert
+        minterme2 = terme2.valeur - 3*terme2.incert
+        maxterme2 = terme2.valeur + 3*terme2.incert
+        dans_self = ((terme2.valeur >= minself)
+            and (terme2.valeur <= maxself))
+        dans_terme2 = ((self.valeur >= minterme2)
+            and (self.valeur <= maxterme2))
+        return dans_self or dans_terme2
+
     def __init__(self, terme=0, tolerance=-1):
         """Initialise un élément de class Incert"""
         if(type(terme) == str):
