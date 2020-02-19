@@ -1,2 +1,3 @@
 # incertitudes
-module python pour effectuer les calculs d'incertitudes de grandeurs physiques
+Module Python.  
+Calculs d'incertitudes de grandeurs physiques.  

@@ -5,16 +5,17 @@
 
 """
     Module python pour effectuer les calculs d'incertitudes
-    de grandeurs physiques
+    de grandeurs physiques.
 """
 
 # Import des modules
 import math
 
+# Définitions constantes et variables globales
 
 # Définitions fonctions et classes
 def acos(terme):
-    """Calcule l'arc cosinus du terme avec son incertitude"""
+    """Calcule l'arc cosinus du terme avec son incertitude."""
     if(type(terme) == Incert):
         resultat = Incert()
         resultat.valeur = math.acos(terme.valeur)
@@ -30,7 +31,7 @@ def acos(terme):
         return acos(Incert(terme))
 
 def asin(terme):
-    """Calcule l'arc sinus du terme avec son incertitude"""
+    """Calcule l'arc sinus du terme avec son incertitude."""
     if(type(terme) == Incert):
         resultat = Incert()
         resultat.valeur = math.asin(terme.valeur)
@@ -46,7 +47,7 @@ def asin(terme):
         return asin(Incert(terme))
 
 def atan(terme):
-    """Calcule l'arc tangente du terme avec son incertitude"""
+    """Calcule l'arc tangente du terme avec son incertitude."""
     if(type(terme) == Incert):
         resultat = Incert()
         resultat.valeur = math.atan(terme.valeur)
@@ -59,7 +60,7 @@ def atan(terme):
         return asin(Incert(terme))
 
 def cos(terme):
-    """Calcule le cosinus du terme avec son incertitude"""
+    """Calcule le cosinus du terme avec son incertitude."""
     if(type(terme) == Incert):
         resultat = Incert()
         resultat.valeur = math.cos(terme.valeur)
@@ -107,7 +108,7 @@ def decomp(chaine_nombre):
     return liste_nombre
 
 def exp(terme):
-    """Calcule l'exponentielle du terme avec son incertitude type"""
+    """Calcule l'exponentielle du terme avec son incertitude type."""
     if(type(terme) == Incert):
         resultat = Incert()
         resultat.valeur = math.exp(terme.valeur)
@@ -120,25 +121,24 @@ def exp(terme):
         return exp(Incert(terme))
 
 def i(terme=""):
-    """Saisie rapide d'un Incert (sans tolérance)"""
+    """Saisie rapide d'un Incert (sans tolérance)."""
     if(terme==""):
         return Incert(input("Entrer la valeur : "), -1)
     else:
         return Incert(terme, -1)
 
 def it(terme="", tolerance=-1):
-    """saisie rapide d'un Incert avec tolérance"""
+    """saisie rapide d'un Incert avec tolérance."""
     if(terme==""):
         terme = input("Entrer la valeur : ")
     if(tolerance==-1):
         tolerance = input("Entrer la tolérance : ")
     if(tolerance == ""):
         tolerance = 0
-    print(tolerance)
     return Incert(terme, float(tolerance))
 
 def ln(terme):
-    """Calcule le logarithme népérien du terme avec son incertitude type"""
+    """Calcule le logarithme népérien du terme avec son incertitude type."""
     if(type(terme) == Incert):
         resultat = Incert()
         resultat.valeur = math.log(terme.valeur)
@@ -160,7 +160,7 @@ def resol(liste_nombre):
     return resolution
 
 def sin(terme):
-    """Calcule le sinus du terme avec son incertitude"""
+    """Calcule le sinus du terme avec son incertitude."""
     if(type(terme) == Incert):
         resultat = Incert()
         resultat.valeur = math.sin(terme.valeur)
@@ -173,7 +173,7 @@ def sin(terme):
         return sin(Incert(terme))
 
 def tan(terme):
-    """Calcule la tangente du terme avec son incertitude"""
+    """Calcule la tangente du terme avec son incertitude."""
     if(type(terme) == Incert):
         resultat = Incert()
         resultat.valeur = math.tan(terme.valeur)
@@ -186,9 +186,9 @@ def tan(terme):
         return tan(Incert(terme))
 
 class Incert():
-    """Classe permettant d'associer les incertitudes à différents calculs"""
+    """Classe permettant d'associer son incertitude à une grandeur physique."""
     def __add__(self, terme2):
-        """Additionne deux termes Incert"""
+        """Additionne deux termes Incert."""
         if(type(terme2) == Incert):
             resultat = Incert()
             resultat.valeur = self.valeur + terme2.valeur
@@ -201,18 +201,18 @@ class Incert():
             return self + Incert(terme2)
 
     def __eq__(self, terme2):
-        minself = self.valeur - 3*self.incert
-        maxself = self.valeur + 3*self.incert
-        minterme2 = terme2.valeur - 3*terme2.incert
-        maxterme2 = terme2.valeur + 3*terme2.incert
-        dans_self = ((terme2.valeur >= minself)
-            and (terme2.valeur <= maxself))
-        dans_terme2 = ((self.valeur >= minterme2)
-            and (self.valeur <= maxterme2))
+        aself = self.valeur - 3*self.incert
+        bself = self.valeur + 3*self.incert
+        aterme2 = terme2.valeur - 3*terme2.incert
+        bterme2 = terme2.valeur + 3*terme2.incert
+        dans_self = ((terme2.valeur >= min(aself, bself))
+            and (terme2.valeur <= max(aself, bself)))
+        dans_terme2 = ((self.valeur >= min(aterme2, bterme2))
+            and (self.valeur <= max(aterme2, bterme2)))
         return dans_self or dans_terme2
 
     def __init__(self, terme=0, tolerance=-1):
-        """Initialise un élément de class Incert"""
+        """Initialise un élément de class Incert."""
         if(type(terme) == str):
             if(terme != ""):
                 self.valeur = float(terme)
@@ -239,7 +239,7 @@ class Incert():
         self.effectif = 0
 
     def __mul__(self, terme2):
-        """Multiplie deux termes Incert"""
+        """Multiplie deux termes Incert."""
         if(type(terme2) == Incert):
             resultat = Incert()
             resultat.valeur = self.valeur * terme2.valeur
@@ -254,12 +254,12 @@ class Incert():
             return self*Incert(terme2)
 
     def __neg__(self):
-        """Calcule l'opposé d'un terme Incert"""
+        """Calcule l'opposé d'un terme Incert."""
         self.valeur = - self.valeur
         return self
 
     def __pow__(self, terme2):
-        """Elève à la puissance un terme Incert"""
+        """Elève à la puissance un terme Incert."""
         if(type(terme2) == Incert):
             resultat = Incert()
             resultat.valeur = math.exp(terme2.valeur*math.log(self.valeur))
@@ -282,23 +282,23 @@ class Incert():
             return self**Incert(terme2)
 
     def __radd__(self, terme2):
-        """Addition à gauche d'un Incert"""
+        """Addition à gauche d'un Incert."""
         return self + terme2
 
     def __rmul__(self, terme2):
-        """Multiplication à gauche d'un Incert"""
+        """Multiplication à gauche d'un Incert."""
         return self * terme2
 
     def __rsub__(self, terme2):
-        """Soustraction à gauche d'un Incert"""
+        """Soustraction à gauche d'un Incert."""
         return -self + terme2
 
     def __rtruediv__(self, terme2):
-        """Division à gauche"""
+        """Division à gauche."""
         return Incert(terme2) / self
 
     def __repr__(self):
-        """Affichage d'un terme Incert"""
+        """Affichage d'un terme Incert."""
         # -------------------------------------------------------------
         # Valeur
         # -------------------------------------------------------------
@@ -333,7 +333,7 @@ class Incert():
         return chaine
 
     def __sub__(self, terme2):
-        """Soustraction de deux termes Incert"""
+        """Soustraction de deux termes Incert."""
         if(type(terme2) == Incert):
             resultat = Incert()
             resultat.valeur = self.valeur - terme2.valeur
@@ -346,7 +346,7 @@ class Incert():
             return self - Incert(terme2)
 
     def __truediv__(self, terme2):
-        """Division de deux termes Incert"""
+        """Division de deux termes Incert."""
         if(type(terme2) == Incert):
             resultat = Incert()
             resultat.valeur = self.valeur / terme2.valeur

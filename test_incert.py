@@ -4,7 +4,7 @@
 # Auteur: Marc COATANHAY
 
 """
-    Test pour le module incert
+    Test pour le module incert.
 """
 
 # Import des modules
