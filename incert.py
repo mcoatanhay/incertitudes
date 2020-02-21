@@ -9,7 +9,12 @@
 """
 
 # Import des modules
+try:
+    import mes_modules_path
+except:
+    pass
 import math
+import sexagesimal.sexag as sexag
 
 # Définitions constantes et variables globales
 
@@ -151,10 +156,13 @@ def ln(terme):
         return ln(Incert(terme))
 
 def resol(liste_nombre):
-    """Détermine la résolution d'un nombre exprimé sous forme de liste contenant :
-    [0] la partie entière
-    [1] la partie décimale
-    [2] la puissance de dix"""
+    """
+        Détermine la résolution d'un nombre exprimé sous forme de liste
+        contenant :
+        [0] la partie entière
+        [1] la partie décimale
+        [2] la puissance de dix
+    """
     nb_decimales = len(liste_nombre[1])
     resolution = 10**(int(liste_nombre[2]) - nb_decimales)
     return resolution
@@ -185,6 +193,32 @@ def tan(terme):
     else:
         return tan(Incert(terme))
 
+def todec(terme):
+    """Transforme un terme au format sexagésimal vers décimal."""
+    if(type(terme) == Incert):
+        resultat = Incert()
+        resultat.valeur = sexag.todec(terme.valeur)
+        resultat.incert = sexag.todec(terme.incert)
+        resultat.elargissements = terme.elargissements
+        resultat.operations = terme.operations
+        resultat.effectif = 0
+        return resultat
+    else:
+        return h(Incert(terme))
+
+def tosexag(terme):
+    """Transforme un terme au format sexagésimal."""
+    if(type(terme) == Incert):
+        resultat = Incert()
+        resultat.valeur = sexag.tosexag(terme.valeur)
+        resultat.incert = sexag.tosexag(terme.incert)
+        resultat.elargissements = terme.elargissements
+        resultat.operations = terme.operations
+        resultat.effectif = 0
+        return resultat
+    else:
+        return hms(Incert(terme))
+
 class Incert():
     """Classe permettant d'associer son incertitude à une grandeur physique."""
     def __add__(self, terme2):
@@ -201,6 +235,7 @@ class Incert():
             return self + Incert(terme2)
 
     def __eq__(self, terme2):
+        """Vérifie l'égalité de deux objets Incert"""
         aself = self.valeur - 3*self.incert
         bself = self.valeur + 3*self.incert
         aterme2 = terme2.valeur - 3*terme2.incert
