@@ -19,6 +19,19 @@ import sexagesimal.sexag as sexag
 # Définitions constantes et variables globales
 
 # Définitions fonctions et classes
+def iabs(terme):
+    """Calcule la valeur absolue du terme avec son incertitude."""
+    if(type(terme) == Incert):
+        resultat = Incert()
+        resultat.valeur = abs(terme.valeur)
+        resultat.incert = terme.incert
+        resultat.elargissements = [("95%", 2), ("99%", 3)]
+        resultat.operations = terme.operations
+        resultat.effectif = 0
+        return resultat
+    else:
+        return iabs(Incert(terme))
+
 def acos(terme):
     """Calcule l'arc cosinus du terme avec son incertitude."""
     if(type(terme) == Incert):
@@ -63,6 +76,24 @@ def atan(terme):
         return resultat
     else:
         return asin(Incert(terme))
+
+def atan2(y, x):
+    """Calcule l'arc tangente de y/x en tenant compte des signes de y et de x"""
+    if((type(y) == Incert) and (type(x) == Incert)):
+        resultat = Incert()
+        resultat.valeur = math.atan2(y.valeur, x.valeur)
+        terme = y/x
+        resultat.incert = (1 / (1 + terme.valeur**2))*terme.incert
+        resultat.elargissements = [("95%", 2), ("99%", 3)]
+        resultat.operations = terme.operations + 1
+        resultat.effectif = 0
+        return resultat
+    else:
+        if(type(y) != Incert):
+            y = Incert(y)
+        if(type(x) != Incert):
+            x = Incert(x)
+        return atan2(y, x)
 
 def cos(terme):
     """Calcule le cosinus du terme avec son incertitude."""
@@ -180,6 +211,19 @@ def sin(terme):
     else:
         return sin(Incert(terme))
 
+def sqrt(terme):
+    """Calcule la racine carrée du terme avec son incertitude."""
+    if(type(terme) == Incert):
+        resultat = Incert()
+        resultat.valeur = math.sqrt(terme.valeur)
+        resultat.incert = terme.incert/(2*resultat.valeur)
+        resultat.elargissements = [("95%", 2), ("99%", 3)]
+        resultat.operations = terme.operations + 1
+        resultat.effectif = 0
+        return resultat
+    else:
+        return sqrt(Incert(terme))
+
 def tan(terme):
     """Calcule la tangente du terme avec son incertitude."""
     if(type(terme) == Incert):
@@ -236,6 +280,8 @@ class Incert():
 
     def __eq__(self, terme2):
         """Vérifie l'égalité de deux objets Incert"""
+        if(type(terme2) != Incert):
+            return (self == i(terme2))
         aself = self.valeur - 3*self.incert
         bself = self.valeur + 3*self.incert
         aterme2 = terme2.valeur - 3*terme2.incert
@@ -354,6 +400,11 @@ class Incert():
         # -------------------------------------------------------------
         chaine += "\r " + format(self.incert, '0.3E')
         chaine += "(u type)"
+        try:
+            chaine += "\r " + format(100*abs(self.incert/self.valeur), '0.3E')
+            chaine += "(u relative type %)"
+        except:
+            chaine += "\r (u relative impossible)"
         # -------------------------------------------------------------
         # Incertitudes élargies
         # -------------------------------------------------------------

@@ -79,6 +79,9 @@ FUNCTIONS
     atan(terme)
         Calcule l'arc tangente du terme avec son incertitude.
     
+    atan2(y, x)
+        Calcule l'arc tangente de y/x en tenant compte des signes de y et de x
+    
     cos(terme)
         Calcule le cosinus du terme avec son incertitude.
     
@@ -93,6 +96,9 @@ FUNCTIONS
     
     i(terme='')
         Saisie rapide d'un Incert (sans tolérance).
+    
+    iabs(terme)
+        Calcule la valeur absolue du terme avec son incertitude.
     
     it(terme='', tolerance=-1)
         saisie rapide d'un Incert avec tolérance.
@@ -110,6 +116,9 @@ FUNCTIONS
     sin(terme)
         Calcule le sinus du terme avec son incertitude.
     
+    sqrt(terme)
+        Calcule la racine carrée du terme avec son incertitude.
+    
     tan(terme)
         Calcule la tangente du terme avec son incertitude.
     
@@ -120,9 +129,9 @@ FUNCTIONS
         Transforme un terme au format sexagésimal.
 
 DATA
-    pi = +3.141593E+00(0 opération) 2.887E-16(u type) 4.8E-16(95%,k=1.65...
-    un = +1.000000E+00(0 opération) 0.000E+00(u type) 0.0E+00(95%,k=1.96...
-    zero = +0.000000E+00(0 opération) 0.000E+00(u type) 0.0E+00(95%,k=1....
+    pi = +3.141593E+00(0 opération) 2.887E-16(u type) 9...type %) 4.8E-...
+    un = +1.000000E+00(0 opération) 0.000E+00(u type) 0...type %) 0.0E+...
+    zero = +0.000000E+00(0 opération) 0.000E+00(u type) (...ssible) 0.0...
 
 FILE
     c:\users\mc\mu_code\_mes_modules\incertitudes\incert.py
