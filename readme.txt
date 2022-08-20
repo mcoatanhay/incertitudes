@@ -1,5 +1,5 @@
 Help on module incert:
-tt
+
 NAME
     incert
 
@@ -12,6 +12,8 @@ CLASSES
         Incert
     
     class Incert(builtins.object)
+     |  Incert(terme=0, tolerance=-1)
+     |  
      |  Classe permettant d'associer son incertitude à une grandeur physique.
      |  
      |  Methods defined here:
@@ -134,6 +136,6 @@ DATA
     zero = +0.000000E+00(0 opération) 0.000E+00(u type) (...ssible) 0.0...
 
 FILE
-    c:\users\mc\mu_code\_mes_modules\incertitudes\incert.py
+    c:\users\mc\documents\python\mes_modules\incertitudes\incert.py
 
 
